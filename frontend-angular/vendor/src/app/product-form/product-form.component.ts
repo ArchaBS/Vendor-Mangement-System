@@ -17,6 +17,7 @@ export class ProductFormComponent {
   price: any;
   quantity: any;
   image_url: any;
+  selectedImagePreview: string = '';
 
   // Edit product fields
   edit_id: any;
@@ -25,6 +26,7 @@ export class ProductFormComponent {
   edit_price: any;
   edit_quantity: any;
   edit_image_url: any;
+  editSelectedImagePreview: string = '';
 
   // Delete
   delete_product_name: any;
@@ -49,6 +51,32 @@ export class ProductFormComponent {
     });
   }
 
+ 
+  onImageFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.image_url = e.target.result;
+        this.selectedImagePreview = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  
+  onEditImageFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.edit_image_url = e.target.result;
+        this.editSelectedImagePreview = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   saveProduct() {
     let data = {
       product_name: this.product_name,
@@ -62,6 +90,7 @@ export class ProductFormComponent {
         alert('Product Added Successfully');
         this.loadProducts();
         this.product_name = this.description = this.price = this.quantity = this.image_url = '';
+        this.selectedImagePreview = '';
       },
       error: (err) => {
         console.error('Add failed:', err);
@@ -80,6 +109,7 @@ export class ProductFormComponent {
       this.edit_price = selected.price;
       this.edit_quantity = selected.quantity;
       this.edit_image_url = selected.image_url;
+      this.editSelectedImagePreview = selected.image_url || '';
     }
   }
 
@@ -99,6 +129,7 @@ export class ProductFormComponent {
       next: () => {
         alert('Product Updated Successfully');
         this.loadProducts();
+        this.editSelectedImagePreview = '';
       },
       error: (err) => {
         console.error('Update failed:', err);
