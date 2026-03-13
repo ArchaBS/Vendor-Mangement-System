@@ -67,10 +67,30 @@
                    placeholder="Enter quantity">
           </div>
 
+          <!-- Image Options -->
           <div class="mb-3">
-            <label>Image URL</label>
-            <input class="form-control" [(ngModel)]="image_url"
-                   placeholder="Paste image URL from Google/web">
+            <label>Image</label>
+
+            <!-- Upload from device -->
+            <div class="mb-2">
+              <small class="text-muted">Option 1: Upload from device</small>
+              <input type="file" class="form-control mt-1"
+                     accept="image/*"
+                     (change)="onImageFileSelected($event)">
+            </div>
+
+            
+            <img *ngIf="selectedImagePreview"
+                 [src]="selectedImagePreview"
+                 style="height:100px; margin-bottom:8px; border-radius:8px; object-fit:contain;">
+
+            
+            <div>
+              <small class="text-muted">Option 2: Paste image URL</small>
+              <input class="form-control mt-1" [(ngModel)]="image_url"
+                     placeholder="Paste image URL from Google/web">
+            </div>
+
           </div>
 
           <button class="btn btn-success w-100" (click)="saveProduct()">
@@ -107,10 +127,32 @@
             <input type="number" class="form-control" [(ngModel)]="edit_quantity">
           </div>
 
+          <!-- Image Options -->
           <div class="mb-3">
-            <label>Image URL</label>
-            <input class="form-control" [(ngModel)]="edit_image_url"
-                   placeholder="Paste new image URL">
+            <label>Image</label>
+
+            
+            <div *ngIf="editSelectedImagePreview" class="mb-2">
+              <small class="text-muted">Current Image:</small><br>
+              <img [src]="editSelectedImagePreview"
+                   style="height:100px; border-radius:8px; object-fit:contain;">
+            </div>
+
+            
+            <div class="mb-2">
+              <small class="text-muted">Option 1: Upload new image from device</small>
+              <input type="file" class="form-control mt-1"
+                     accept="image/*"
+                     (change)="onEditImageFileSelected($event)">
+            </div>
+
+           
+            <div>
+              <small class="text-muted">Option 2: Paste new image URL</small>
+              <input class="form-control mt-1" [(ngModel)]="edit_image_url"
+                     placeholder="Paste new image URL">
+            </div>
+
           </div>
 
           <button class="btn btn-warning w-100" (click)="updateProduct()">
@@ -124,7 +166,6 @@
       <div *ngIf="activeSection === 'delete'">
         <h3>Delete Product</h3>
 
-        <!-- Warning if 2 or less products -->
         <div *ngIf="products.length <= 2" class="alert alert-warning">
           ⚠️ You need more than 2 products to delete. Please add more products first.
         </div>
@@ -135,7 +176,6 @@
             <input class="form-control" [(ngModel)]="delete_product_name"
                    placeholder="Type product name to delete">
           </div>
-
           <button class="btn btn-danger w-100" (click)="deleteProduct()">
             Delete Product
           </button>
