@@ -7,7 +7,7 @@ class Product(models.Model):
     description = models.TextField()
     price = models.FloatField()
     quantity = models.IntegerField()
-    image_url = models.URLField(max_length=500, blank=True, null=True)  # ✅ added
+    image_url = models.URLField(max_length=500, blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
