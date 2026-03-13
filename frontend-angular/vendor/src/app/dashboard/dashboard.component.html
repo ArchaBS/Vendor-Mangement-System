@@ -1,0 +1,57 @@
+<div class="container-fluid">
+  <div class="row">
+
+    <!-- Sidebar -->
+    <div class="col-3 bg-light vh-100 p-3">
+      <h4>Menu</h4>
+      <button class="btn btn-outline-primary w-100 mb-2"
+              routerLink="/product-management">
+        Product Management
+      </button>
+    </div>
+
+    <!-- Product List -->
+    <div class="col-9 p-4">
+
+      <!-- Header with Add New Product button -->
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>Products</h3>
+        <button class="btn btn-success" routerLink="/product-management">
+          ➕ Add New Product
+        </button>
+      </div>
+
+      <div class="row row-cols-1 row-cols-md-3 g-3">
+
+        <div class="col" *ngFor="let product of products">
+          <div class="card h-100">
+
+            <!-- Product Image -->
+            <img *ngIf="product.image_url"
+                 [src]="product.image_url"
+                 class="card-img-top"
+                 style="height: 200px; object-fit: contain; padding: 10px; background:#f8f8f8; border-radius: 8px 8px 0 0;"
+                 alt="{{product.product_name}}">
+
+            <!-- Placeholder if no image -->
+            <div *ngIf="!product.image_url"
+                 style="height:180px; background:#f0f0f0; display:flex;
+                        align-items:center; justify-content:center;
+                        border-radius: 8px 8px 0 0; color:#aaa; font-size:0.9rem;">
+              No Image
+            </div>
+
+            <div class="card-body">
+              <h5 class="card-title">{{product.product_name}}</h5>
+              <p class="card-text text-muted">{{product.description}}</p>
+              <p><b>Price:</b> ₹{{product.price}}</p>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
